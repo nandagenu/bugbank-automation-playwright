@@ -1,0 +1,46 @@
+name: Testes Automatizados
+
+# Roda os testes a cada push/PR — mesmo conceito de pipeline de CI/CD
+# usado com Jenkins ou GitLab CI, só que usando GitHub Actions.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Instalar o navegador do Playwright
+        run: npx playwright install --with-deps chromium
+
+      - name: Rodar testes
+        run: npx playwright test
+
+      - name: Publicar relatório como artefato (evidências)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
+
+      - name: Publicar relatório JUnit XML (formato importado pelo Xray)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: junit-report
+          path: results/junit.xml
+          retention-days: 7
