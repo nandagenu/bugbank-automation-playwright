@@ -1,7 +1,7 @@
 # BugBank Automation — Playwright
 
 Testes automatizados do [BugBank](https://bugbank.netlify.app), um banco digital fictício para
-prática de QA. Os casos de teste foram elaborados por mim em uma palestra de QA e automatizados
+prática de QA. Os casos de teste foram elaborados por mim em um evento de QA e automatizados
 aqui com **Playwright** e **JavaScript**.
 
 ## O que é testado
